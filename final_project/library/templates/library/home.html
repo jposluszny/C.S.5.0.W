@@ -1,0 +1,254 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %} Home {% endblock %}
+{% block script %}
+  <script src="{% static 'library/home.js' %}"></script>
+{% endblock %}
+{% block body %}
+
+  <!-- Display alerts -->
+  <div  class="row">
+    <div id="alertContainer" class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Welcome section -->
+  {% if user.is_authenticated %}
+    <div class="row mt-2 mb-4">
+      <div class="col">
+        <div class="d-flex justify-content-around align-items-center">
+          <h5><img class="img me-3" src="{{request.user.profile_picture.url}}" alt="">Welcome <a href="{% url 'users:profile' user.pk %}"><b class="text-info">{{user.username}}</b></a></h5>
+          <a href="{% url 'emails:email_inbox'%}">
+            <button type="button" class="btn btn-primary position-relative">
+                Mailbox
+              {% if unread_messages %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <span id="unreadEmails">{{unread_messages}}</span>
+                  <span class="visually-hidden">unread messages</span>
+                </span>
+              {% endif %}
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Staff member dashbord -->
+    {% if request.user.staff_member %}
+
+    <!-- Navigation buttons -->
+    <div class="row gy-1 gx-0">
+      <div class="col-md-3">
+        <button id="pendingRequestsBtn"  class="btn btn-outline-info w-100 staff_dashboard_btn active " type="button" data-bs-toggle="button" name="button" aria-pressed="true">REQUESTS</button>
+      </div>
+      <div  class="col-md-3 ">
+        <button id="loansBtn" class="btn btn-outline-info w-100 staff_dashboard_btn" type="button" data-bs-toggle="button" name="button" >LOANS</button>
+      </div>
+      <div  class="col-md-3 ">
+        <button id="overdueLoansBtn" class="btn btn-outline-info w-100 staff_dashboard_btn" type="button" data-bs-toggle="button" name="button" >OVERDUE LOANS</button>
+      </div>
+      <div  class="col-md-3 ">
+        <button id="allUsersBtn" class="btn btn-outline-info w-100 staff_dashboard_btn" type="button" data-bs-toggle="button" name="button"  >ALL USERS</button>
+      </div>
+    </div>
+
+    <!-- Pending requests block -->
+    <div id="pendingRequestsBlock" class="my-3">
+      <div class="itemsHeader">
+        <div class="row">
+          <div class="col-md-4">
+            <p class="m-0 p-2">BOOK TITLE</p>
+          </div>
+          <div class="col-md-3">
+            <p class="m-0 p-2">USER</p>
+          </div>
+          <div class="col-md-3">
+            <p class="m-0 p-2">STATUS</p>
+          </div>
+          <div class="col-md-2">
+          </div>
+        </div>
+      </div>
+      {% for loan in pending_requests %}
+        <div class="shadow py-3 py-md-1 text-center">
+          <div class="row">
+            <div class="col-md-4">
+              <p class="p-2 m-0"><a href="{% url 'library:book_details' loan.book.pk %}">{{loan.book.title}}</a></p>
+            </div>
+            <div class="col-md-3">
+                <p class="p-2 m-0"><a href="{% url 'users:profile' loan.user.pk %}">{{loan.user.username}}</a></p>
+            </div>
+            <div class="col-md-3">
+              <p class="p-2 m-0">{{loan.status}}</p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0"><a href="{% url 'library:loan_details' loan.pk %}"><small>details</small></a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Loans block -->
+    <div id="loansBlock" class="d-none my-3">
+      <div class="itemsHeader">
+        <div class="row">
+          <div class="col-md-3">
+            <p class="m-0 p-2">BOOK TITLE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">USER</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">LOAN DATE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">RETURN DATE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">STATUS</p>
+          </div>
+          <div class="col-md-1">
+          </div>
+        </div>
+      </div>
+      {% for loan in loans %}
+        <div class="shadow py-3 py-md-1 text-center">
+          <div class="row">
+            <div class="col-md-3">
+              <p class="p-2 m-0"><a href="{% url 'library:book_details' loan.book.pk %}">{{loan.book.title}}</a></p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0"><a href="{% url 'users:profile' loan.user.pk %}">{{loan.user.username}}</a></p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0">{{loan.loan_date}}</p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0">{{loan.return_date}}</p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0">{{loan.status}}</p>
+            </div>
+            <div class="col-md-1">
+              <p class="p-2 m-0"><a href="{% url 'library:loan_details' loan.pk %}"><small>details</small></a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Overdue block -->
+    <div id="overdueBlock" class="d-none my-3">
+      <div class="itemsHeader">
+        <div class="row">
+          <div class="col-md-3">
+            <p class="m-0 p-2">BOOK TITLE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">USER</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">LOAN DATE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">RETURN DATE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">STATUS</p>
+          </div>
+          <div class="col-md-1">
+          </div>
+        </div>
+      </div>
+      {% for loan in overdue_loans %}
+        <div class="shadow py-3 py-md-1 text-center">
+          <div class="row">
+            <div class="col-md-3">
+              <p class="p-2 m-0"><a href="{% url 'library:book_details' loan.book.pk %}">{{loan.book.title}}</a></p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0"><a href="{% url 'users:profile' loan.user.pk %}">{{loan.user.username}}</a></p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0">{{loan.loan_date}}</p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0">{{loan.return_date}}</p>
+            </div>
+            <div class="col-md-2">
+              <p class="p-2 m-0">{{loan.status}}</p>
+            </div>
+            <div class="col-md-1">
+              <p class="p-2 m-0"><a href="{% url 'library:loan_details' loan.pk %}"><small>details</small></a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- All users block -->
+    <div id="usersBlock" class="d-none mb-3">
+      <div class="row">
+        <div class="col-md-6 col-lg-7">
+        </div>
+        <div class="col-md-6 col-lg-5">
+            <input id="userFilterForm" name="q" class="form-control my-3 w-100 mx-0" type="text" placeholder="Filter users" aria-label="Search">
+        </div>
+      </div>
+      <div class="itemsHeader">
+        <div id="" class="row">
+          <div class="col-md-3">
+            <p class="m-0 p-2">USERNAME</p>
+          </div>
+          <div class="col-md-3">
+            <p class="m-0 p-2">BORROWED BOOKS</p>
+          </div>
+          <div class="col-md-3">
+            <p class="m-0 p-2">LAST LOGIN</p>
+          </div>
+          <div class="col-md-3">
+            <p class="m-0 p-2">EMAIL ADDRESS</p>
+          </div>
+        </div>
+      </div>
+      <div id="usersContainer">
+      </div>
+    </div>
+
+    <!-- Dashboard for none staff members -->
+    {% else %}
+    <div id="" class="row gx-0 gy-1">
+      <div class="col-md-4">
+        <button id="bookTitleBtn" class="btn btn-outline-info w-100 user_dashboard_btn active" type="button" name="button">BOOKS:</button>
+      </div>
+      <div class="col-md-4">
+        <button id="statusBtn" class="btn btn-outline-info w-100 user_dashboard_btn" type="button" name="button">STATUS:</button>
+      </div>
+      <div  class="col-md-4">
+        <button id="returnDateBtn" class="btn btn-outline-info w-100 user_dashboard_btn " type="button" name="button">RETURN DATE:</button>
+      </div>
+    </div>
+    <div id="loansContainer">
+
+    </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

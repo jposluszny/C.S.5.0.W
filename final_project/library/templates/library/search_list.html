@@ -1,0 +1,110 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}Search results{% endblock %}
+{% block script %}
+  <script src="{% static 'library/search.js'%}" charset="utf-8"></script>
+{% endblock %}
+{% block body %}
+
+  <!-- Display alerts -->
+  <div class="row">
+    <div class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <div class="alert alert-info alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>INFO!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Display submited query if results are available -->
+  <div class="row my-1">
+    <div class="col">
+      {% if request.GET.q == ''%}
+        <h6><u>All available books.</u></h6>
+      {% endif %}
+      {% if request.GET.q != '' and page_obj %}
+        <h6><u>Results for: "<strong>{{request.GET.q}}</strong>"</u></h6>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Display books -->
+  {% for book in page_obj %}
+    <div id="{{book.pk}}" class="mb-3 shadow shadowItem">
+      <div class="row">
+        <div class="d-none  d-sm-block col-sm-4 col-md-3 col-lg-2">
+          <div class="d-flex h-100 align-items-center justify-content-center">
+            <div class="p-2">
+              <img style='max-height:80px; max-width:140px;' src="{% static 'library/images/book.jpeg' %}" alt="IMG of the book">
+            </div>
+
+          </div>
+        </div>
+        <div class="d-flex align-items-center col-sm-8 col-md-9 col-lg-10">
+          <div class="p-2">
+            <h5><strong>{{book.title}}</strong></h5>
+            <small class="d-block">Author: <strong>{{book.author}}</strong></small>
+            <small>Published:<strong> {{book.year}}</strong></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  <!-- Create pagination -->
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><div id="numPages">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</div></li>
+            {% if page_obj.number != 1 %}
+              <li class="page-item"><a class="page-link" href="{% url 'library:search' %}?q={{request.GET.q}}&page=1">First</a></li>
+            {% endif %}
+            {% if page_obj.has_previous %}
+              {% if page_obj.number != 2 %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'library:search' %}?q={{request.GET.q}}&page={{page_obj.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="{% url 'library:search' %}?q={{request.GET.q}}&page={{page_obj.number}}">{{page_obj.number}}</a></li>
+            {% if page_obj.has_next %}
+              {% if page_obj.number|add:"1" != page_obj.paginator.num_pages %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'library:search' %}?q={{request.GET.q}}&page={{page_obj.next_page_number}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+            {% if page_obj.number|add:"1" <= page_obj.paginator.num_pages %}
+              <li class="page-item"><a class="page-link" href="{% url 'library:search' %}?q={{request.GET.q}}&page={{page_obj.paginator.num_pages}}">Last</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

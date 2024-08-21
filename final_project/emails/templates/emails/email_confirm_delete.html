@@ -1,0 +1,16 @@
+{% extends 'library/layout.html'%}
+{% block title %}
+  Confirm delete
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col mt-3">
+    <h5>Do you really want to delete the email "{{object.subject}}" sent by "{{object.sender}}" from the database?</h5>
+    <form class="my-4" method="post">
+      {% csrf_token %}
+      <input class="btn btn-outline-danger" type="submit" name="" value="Confirm">
+      <a href="{% url 'emails:email_details' object.pk%}"><button class="btn btn-outline-secondary" type="button" name="button">Cancel</button></a>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}Confirm delete{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="row">
+    <form class="my-4" method="post">
+      {% csrf_token %}
+      <h3>Do you really want to delete the book "{{object.title}}" by {{object.author}} from
+        the database?</h3>
+      <input class="btn btn-outline-danger" type="submit" name="" value="Confirm">
+      <a href="{% url 'library:book_details' object.pk%}"><button class="btn btn-outline-info" type="button" name="button">Cancel</button></a>
+    </form>
+  </div>
+</div>
+{% endblock %}

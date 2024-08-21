@@ -1,0 +1,17 @@
+{% extends 'library/layout.html'%}
+{% block title %}
+  Confirm delete
+{% endblock %}
+{% block body %}
+  <div class="row">
+    <div class="col">
+      <form class="my-4" method="post">
+        {% csrf_token %}
+        <h5>Do you really want to delete the request for "{{object.book.title}}" by {{object.user.username}} from
+          the database?</h5>
+        <input class="btn btn-outline-danger" type="submit" name="" value="Confirm">
+        <a href="{% url 'library:loan_details' object.pk%}"><button class="btn btn-outline-info" type="button" name="button">Cancel</button></a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

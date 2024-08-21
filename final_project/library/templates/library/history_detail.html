@@ -1,0 +1,47 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}History of loan{% endblock %}
+{% block body %}
+  <!-- Display alerts -->
+  <div class="row">
+    <div id="alertContainer" class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Display details -->
+  <div class="row bg-white">
+    <div class="p-3 col font-weight-bold">
+      <p class="d-none" id="data" data-loanpk={{object.pk}} data-username={{request.user}} data-userpk={{request.user.pk}}></p>
+      <p><small class="me-3">Book:</small> <a href="{% url 'library:book_details' object.book.pk %}">{{object.book}}</a> </p>
+      <p><small class="me-3">User:</small><a href="{% url 'users:profile' object.user.pk %}">{{object.user}}</a></p>
+      <p><small class="me-3">Loan date:</small> {{object.loan_date|default_if_none:"-"}} </p>
+      <p><small class="me-3">Return date:</small> {{object.return_date|default_if_none:"-"}} </p>
+      <p><small class="me-3">Status:</small> {{object.status}} </p>
+      <p><small class="me-3">Can renew:</small> {{object.can_renew}} </p>
+      <p><small class="me-3">Is overdue:</small> {{object.is_overdue}} </p>
+      {% if object.fee > 0 %}
+        <p class="fs-3 fw-bold text-danger"><span class="me-3  text-muted">Fee:</span> <span id="fee">{{object.fee}}$</span></p>
+      {% endif %}
+      {% if object.status == 'rejected' %}
+        <p><small class="me-3">Reject message:</small> {{object.reject_message|default:"-"}} </p>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

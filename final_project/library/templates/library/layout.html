@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Library{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'library/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block script %}
+    {% endblock %}
+    <script src="{% static 'library/functions.js' %}" charset="utf-8"></script>
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'library:home' %}">Home</a>
+        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:profile' request.user.pk %}">Profile</a>
+          </li>
+          {% if request.user.staff_member %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'library:add_book' %}">Add books</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'users:registration' %}">Register</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+          </li>
+        {% endif %}
+      </ul>
+        <form class="d-flex" method="get" action="{% url 'library:search' %}">
+          <input class="form-control me-2" type="search" placeholder="Search for books" aria-label="Search" name="q">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+    <div id="container" class="container pt-2">
+      {% block body %}
+      {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>

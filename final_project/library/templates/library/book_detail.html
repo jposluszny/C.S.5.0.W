@@ -1,0 +1,130 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}Book details{% endblock %}
+{% block script %}
+  <script src="{% static 'library/book_details.js' %}"></script>
+  <script src="{% static 'library/book_review.js' %}"></script>
+{% endblock %}
+{% block body %}
+
+  <!-- Display alerts -->
+  <div class="row">
+    <div id="alertContainer" class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Column for book informations and buttons -->
+    <div class="col-md-5 mt-3">
+      <div class="">
+        <p class="d-none" id="data" data-bookpk={{object.pk}} data-username={{request.user}} data-userpk={{request.user.pk}}></p>
+        <p><small class="me-3 text-muted">ISBN:</small> {{object.isbn}} </p>
+        <p><small class="me-3 text-muted">Title:</small> {{object.title}} </p>
+        <p><small class="me-3 text-muted">Author:</small> {{object.author}} </p>
+        <p><small class="me-3 text-muted">Published:</small> {{object.year}} </p>
+
+        <!-- Check if book is available -->
+        {% if not object.loan %}
+          <div id="loanInfo" class="">
+            <p class="text-success"> Book is available </p>
+          </div>
+        {% else %}
+          <p><small class="me-3 text-muted">Request:</small> <a href="{% url 'library:loan_details' object.loan.pk %} ">click me</a></p>
+
+          <!-- If request waits for aprooval -->
+          {% if object.loan.status == "pending" %}
+            <div id="loanInfo">
+              <p><small class="me-3 text-muted">Status:</small> {{object.loan.status}}</p>
+            </div>
+
+          <!-- If book was lent -->
+          {% else %}
+            <div id="loanInfo">
+              <p><small class="me-3 text-muted">Borrowed by:</small> <a href="{% url 'users:profile' object.loan.user.pk %} ">{{object.loan.user}}</a></p>
+              <p><small class="me-3 text-muted">Return date:</small>{{object.loan.return_date}}</p>
+
+              <!-- Display only for staff members and user who borrowed the book -->
+              {% if request.user == object.loan.user or request.user.staff_member %}
+                {% if object.loan.can_renew %}
+                  <p class="text-success"><small class="me-3 text-muted">Can user renew:</small> Yes </p>
+                {% else %}
+                  <p class="text-danger"><small class="me-3 text-muted ">Can user renew:</small> Already renewed </p>
+                {% endif %}
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endif %}
+        {% if request.user.is_authenticated %}
+
+          <!-- For staff members display update and delete button -->
+          {% if request.user.staff_member %}
+            <a href="{% url 'library:book_update' object.pk %}"><button class="btn btn-outline-info">Update</button></a>
+            <a href="{% url 'library:book_delete' object.pk %}"><button class="btn btn-outline-danger">Delete</button></a>
+          {% endif %}
+
+          <!-- If book is available display borrow button -->
+          {% if not object.loan %}
+            <button id="borrowBtn" data-pk={{object.pk}} class="btn btn-outline-success">Borrow</button>
+          {% else %}
+
+            <!-- Display renew button if user borrowed the book and is allowed to renew it -->
+            {% if object.loan.user == request.user and object.loan.can_renew %}
+              <button id="renewBtn" data-pk={{object.pk}} class="btn btn-outline-dark">Renew</button>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Column for img and description -->
+    <div class="col-md-7 mt-5 mt-md-3">
+      <div class="">
+        <p><img style="max-width:40%" class="me-3" align="left" src="{% static 'library/images/book.jpeg' %}" alt=""> {{object.description}}</p>
+      </div>
+    </div>
+  </div>
+    <hr class="my-4">
+
+
+  <div class="row">
+    <div class="col">
+      <h5>Reviews:</h5>
+    </div>
+  </div>
+  <!-- Review can be added only by authenticated users -->
+  {% if request.user.is_authenticated %}
+    <div class="row mb-3">
+      <div class="col">
+        <a id="reviewFormLink" href="#">Show the add review form</a>
+          <form class="d-none" id="reviewForm" class="w-100">
+            {% csrf_token %}
+            <textarea name="content" class="form-control w-100" rows="3" ></textarea>
+            <input class="w-100 btn btn-outline-success mt-2" type="submit" name="submit_review" value="Add review">
+          </form>
+      </div>
+    </div>
+  {% endif %}
+
+<!-- Container for reviews -->
+<div class="row">
+  <div id="reviewContainer" class="col">
+
+  </div>
+</div>
+{% endblock %}

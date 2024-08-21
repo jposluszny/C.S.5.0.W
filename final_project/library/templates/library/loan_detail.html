@@ -1,0 +1,117 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}Loan details{% endblock %}
+{% block script %}
+  <script src="{% static 'library/loan_details.js' %}"></script>
+{% endblock %}
+{% block body %}
+  <!-- Display alerts -->
+  <div class="row">
+    <div id="alertContainer" class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Loan details -->
+  <div class="row bg-white">
+    <div class="p-3 col font-weight-bold">
+      <p class="d-none" id="data" data-loanpk={{object.pk}} data-username={{request.user}} data-userpk={{request.user.pk}}></p>
+      <p><small class="me-3 text-muted">Book:</small> <a href="{% url 'library:book_details' object.book.pk %}">{{object.book}}</a> </p>
+      <p><small class="me-3 text-muted">User:</small> <a href="{% url 'users:profile' object.user.pk %}">{{object.user}}</a></p>
+
+      <!-- If request was accepted -->
+      {% if object.loan_date and object.return_date %}
+        <p><small class="me-3 text-muted">Loan date:</small> {{object.loan_date}} </p>
+        <p><small class="me-3 text-muted">Return date:</small> {{object.return_date}} </p>
+
+      <!-- If request waits for approval -->
+      {% else %}
+        <p><small class="me-3 text-muted">Loan date:</small> <span id="loanDate">Waiting for approval</span></p>
+        <p><small class="me-3 text-muted">Return date:</small> <span id="returnDate">Waiting for approval</span></p>
+      {% endif %}
+      <p><small class="me-3 text-muted">Status:</small> <span id="status">{{object.status}}</span></p>
+      <p><small class="me-3 text-muted">Overdue:</small> <span id="status">{{object.is_overdue}}</span></p>
+      {% if object.is_overdue %}
+        <p class="fs-3 fw-bold text-danger"><span class="me-3  text-muted">Fee:</span> <span id="fee">{{object.fee}}$</span></p>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+        {% if request.user.staff_member %}
+          <!-- Display delete and update buttons -->
+          <a href="{% url 'library:loan_update' object.pk %}"><button class="btn btn-outline-info">Update</button></a>
+          <a href="{% url 'library:loan_delete' object.pk %}"><button class="btn btn-outline-danger">Delete</button></a>
+
+          <!-- If there is a fee modal will be displayed to ensure the fee was paid -->
+          {% if object.status == "accepted" %}
+            {% if object.fee %}
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#confirmPayment">Return book</button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="confirmPayment" tabindex="-1" aria-labelledby="confirmPaymentLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmPaymentLabel">Payment confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Confirm that the fee was paid.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form class="d-inline" action="{% url 'library:return_book' %}" method="post">
+                      {% csrf_token %}
+                      <input  type="hidden" name="bookpk" value="{{object.book.pk}}">
+                      <input id="returnBtn" class="btn btn-success" type="submit" name="" value="Confirm payment">
+                    </form>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+            <!--  If there is no fee display return button -->
+            {% else %}
+              <form class="d-inline" action="{% url 'library:return_book' %}" method="post">
+                {% csrf_token %}
+                <input  type="hidden" name="bookpk" value="{{object.book.pk}}">
+                <input id="returnBtn" class="btn btn-outline-dark" type="submit" name="" value="Return book">
+              </form>
+            {% endif %}
+
+          {% else %}
+          <!-- If request is waiting for approval display accept and reject request buttons, hide return button-->
+            <form  class="d-inline " action="{% url 'library:return_book' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="bookpk" value="{{object.book.pk}}">
+              <input id="returnBtn" class="d-none btn btn-outline-dark" type="submit" name="" value="Return book">
+            </form>
+            <button id="acceptBtn" data-bookpk={{object.book.pk}} class="btn btn-outline-success">Accept</button>
+            <button id="rejectBtn" data-bookpk={{object.book.pk}} class="btn btn-outline-warning">Reject request</button>
+
+            <form id="rejectForm" class="mt-3 px-5 d-none" action="{% url 'library:reject_request' %}" method="post">
+              {% csrf_token %}
+              <input  type="hidden" name="bookpk" value="{{object.book.pk}}">
+              <textarea class="form-control" name="rejectMessage" rows="3" placeholder="Tell the user the reason of rejection."></textarea>
+              <input class="btn btn-outline-success w-100 mt-1" type="submit" name="" value="Submit">
+            </form>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

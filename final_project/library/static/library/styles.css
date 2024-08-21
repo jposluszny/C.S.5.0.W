@@ -1,0 +1,111 @@
+.bgOverdue{
+  background-color: rgba(200, 0, 0, 0.3);
+  font-weight:600;
+}
+.shadowItem:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.img {
+  width: 50px;
+  height: 50px;
+}
+.imgProfile{
+  width: 200px;
+  max-height: 300px;
+}
+.itemsHeader{
+  background-color: rgb(240, 240, 240);
+  font-weight: bold;
+  text-align: center;
+}
+#numPages{
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  color: #007bff;
+  line-height: 1.25;
+  padding: .5rem .75rem;
+  margin-right: 0.5rem;
+  position:relative;
+}
+
+/* ------- FORMS  --------*/
+
+.formContainer {
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+  margin-top: 1rem;
+}
+.form {
+  width: 100%;
+  padding:1rem;
+  border: 1px solid black;
+  background-color: rgb(245, 245, 245);
+}
+.form select, .form input{
+  margin: 0;
+  padding: 0.35rem;
+  font-size: 1.2rem;
+  width: 100%;
+  border:1px solid black;
+  box-sizing: border-box;
+  text-align: center;
+}
+.form input['text']{
+  font-size: 1.5rem;
+}
+.form label{
+  display:block;
+  font-weight: bold;
+  margin: 0;
+}
+.form span{
+  display: block;
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.6;
+}
+.form li {
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.6;
+}
+.form ul.errorlist li{
+  color: red;
+  font-style: italic;
+  font-size: 1rem;
+  opacity: 1;
+}
+.form input[type='submit']{
+  margin: 0;
+}
+.form .submit{
+  background-color: rgb(25, 25, 25);
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-size: 1.5rem;
+}
+.form .submit:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}
+.form textarea{
+  width: 100%;
+}
+label[for='id_staff_member'], label[for='id_available']{
+  display:inline;
+}
+.form input[type='checkbox']{
+  display:inline-block;
+  width: auto;
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+}
+
+
+/* ------- FORMS  --------*/

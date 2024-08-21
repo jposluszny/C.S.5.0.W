@@ -1,0 +1,170 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}
+   {{object.username}}'s profile
+{% endblock %}
+{% block script %}
+  <script src="{% static 'users/user_detail.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<!-- Display alerts -->
+<div class="row">
+  <div id="alertContainer" class="col">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>ERROR!</strong> {{message}}
+          </div>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>SUCCES!</strong> {{message}}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 mt-3 ">
+    <!-- Display photo and general information -->
+    <div class="">
+      <p><a href="{{object.profile_picture.url}}"><img src="{{object.profile_picture.url}}" class="rounded-circle imgProfile"  alt="User's image"></a></p>
+      <p id='userPk' class="d-none" data-userpk={{object.pk}}></p>
+      <p><small class="me-3 text-muted">Username:</small> {{object.username}} </p>
+      <p><small class="me-3 text-muted">Last login:</small> {{object.last_login|default_if_none:"User hasn't logged yet."}} </p>
+      <p><small class="me-3 text-muted">Contact:</small> <a href="{% url 'emails:email_compose' %}">email me</a> </p>
+      {% if fees_to_pay %}
+        <p class="fs-3 fw-bold text-danger"><span class="me-3  text-muted">Fees to pay:</span> <span id="fee">{{fees_to_pay}}$</span></p>
+      {% endif %}
+
+      <!-- Display only for staff members -->
+      {% if request.user.staff_member %}
+        <a href="{% url 'users:delete' object.pk%}"><button class="btn btn-outline-danger">Delete User</button></a>
+        <a href="{% url 'users:update' object.pk %}"><button class="btn btn-outline-success">Update Profile</button></a>
+      {% endif %}
+      {% if object == request.user %}
+        <a href="{% url 'users:password_change' %}"><button class="btn btn-outline-dark">Change Password</button></a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Display only for staff members and owners of the profiles -->
+
+    <div class="col-md-6 mt-5 mt-md-3">
+      <div class="">
+        {% if request.user.staff_member or object == request.user %}
+          <p><small class="me-3 text-muted">Name:</small> {{object.first_name}} {{object.last_name}}</p>
+          <p><small class="me-3 text-muted">Email address:</small> {{object.email}} </p>
+          <p><small class="me-3 text-muted">Telefon number:</small> {{object.telefon_number}} </p>
+          <p><small class="me-3 text-muted">Address:</small> {{object.address}} </p>
+          <p><small class="me-3 text-muted">Date of birth:</small> {{object.born}} </p>
+          <p><small class="me-3 text-muted">Member since:</small> {{object.date_joined}} </p>
+            <p><small class="me-3 text-muted">Total fees:</small> {{total_fees}}$ </p>
+          <p><small class="me-3 text-muted">Status:</small>
+            {% if object.staff_member %}
+              staff member
+            {% else %}
+              user
+            {% endif %}
+         </p>
+         <p><small class="me-3 text-muted">Reviews:</small> <a href="{% url 'library:user_reviews' object.pk %}">show reviews</a> </p>
+        {% endif %}
+      </div>
+    </div>
+</div>
+<hr class="my-3">
+
+<!-- Display users' borrowing -->
+<div class="row">
+  <div class="col">
+    <small class="fw-bold">My borrowing:</small>
+    <div id="loanListContainer">
+      <div class="itemsHeader">
+        <div class="row">
+          <div class="col-md-3">
+            <p class="m-0 p-2">BOOK TITLE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">BOOK AUTHOR</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">LOAN DATE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">RETURN DATE</p>
+          </div>
+          <div class="col-md-2">
+            <p class="m-0 p-2">STATUS</p>
+          </div>
+          <div class="col-md-1">
+          </div>
+        </div>
+      </div>
+      {% for loan in user.borrowing.all  %}
+
+        <!-- If loan is overdue add red background  -->
+        {% if loan.is_overdue %}
+          <div class="shadow py-3 py-md-1 text-center bgOverdue">
+            <div class="row ">
+              <div class="col-md-3">
+                <p class="p-2 m-0"><a href="{% url 'library:book_details' loan.book.pk %}">{{loan.book.title}}</a></p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.book.author}}</p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.loan_date}}</p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.return_date}}</p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.status}}</p>
+              </div>
+              <div class="col-md-1">
+                <p class="p-2 m-0"><a href="{% url 'library:loan_details' loan.pk %}"><small>details</small></a></p>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="shadow py-3 py-md-1 text-center">
+            <div class="row">
+              <div class="col-md-3">
+                <p class="p-2 m-0"><a href="{% url 'library:book_details' loan.book.pk %}">{{loan.book.title}}</a></p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.book.author}}</p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.loan_date|default_if_none:"-"}}</p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.return_date|default_if_none:"-"}}</p>
+              </div>
+              <div class="col-md-2">
+                <p class="p-2 m-0">{{loan.status}}</p>
+              </div>
+              <div class="col-md-1">
+                <p class="p-2 m-0"><a href="{% url 'library:loan_details' loan.pk %}"><small>details</small></a></p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <hr class="mt-5 mb-4">
+    <!-- Container for history of borrowing -->
+    <small class="d-block fw-bold">History:</small>
+    <div id="historyContainer" class="text-muted mb-3">
+
+    </div>
+  </div>
+</div>
+{% endblock %}

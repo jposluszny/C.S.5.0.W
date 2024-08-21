@@ -1,0 +1,16 @@
+{% extends 'library/layout.html'%}
+{% block title %}Add book{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col">
+    <div class="formContainer">
+      <form class="form" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="submit" type="submit" name="" value="Add book">
+      </form>
+      <p class="my-3"><a href="{% url 'library:file_add_book'%}">Upload a file to add a list of books.</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

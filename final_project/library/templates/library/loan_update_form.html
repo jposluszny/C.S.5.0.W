@@ -1,0 +1,13 @@
+{% extends 'library/layout.html'%}
+{% block title %}Update request{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col formContainer">
+    <form class="form" method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input class="submit" type="submit" name="" value="Update request">
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col">
+    <div class="d-flex flex-column mt-2 gap-2 gap-md-4 flex-md-row justify-content-center">
+      {% if request.path == '/email/inbox/' %}
+        <a href="{% url 'emails:email_inbox'%}">
+          <button type="button" class="btn btn-outline-secondary btn-lg active w-100 position-relative">
+              Inbox
+            {% if unread_messages %}
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  <span id="unreadEmails">{{unread_messages}}</span>
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            {% endif %}
+          </button>
+        </a>
+      {% else %}
+        <a href="{% url 'emails:email_inbox'%}">
+          <button type="button" class="btn btn-outline-secondary btn-lg w-100 position-relative">
+              Inbox
+            {% if unread_messages %}
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  <span id="unreadEmails">{{unread_messages}}</span>
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            {% endif %}
+          </button>
+        </a>
+      {% endif %}
+
+      {% if request.path == '/email/compose/' %}
+        <a href="{% url 'emails:email_compose'%}">
+          <button  type="button" class="btn btn-outline-secondary btn-lg active w-100">
+              Compose
+          </button>
+        </a>
+        {% else %}
+          <a href="{% url 'emails:email_compose'%}">
+            <button  type="button" class="btn btn-outline-secondary btn-lg w-100">
+                Compose
+            </button>
+          </a>
+        {% endif %}
+
+      {% if request.path == '/email/sent/' %}
+        <a href="{% url 'emails:email_sent'%}">
+          <button type="button" class="btn btn-outline-secondary btn-lg active w-100">
+              Sent
+          </button>
+        </a>
+      {% else %}
+        <a href="{% url 'emails:email_sent'%}">
+          <button type="button" class="btn btn-outline-secondary btn-lg w-100">
+              Sent
+          </button>
+        </a>
+      {% endif %}
+
+      {% if request.path == '/email/archive/' %}
+        <a href="{% url 'emails:email_archive'%}">
+          <button type="button" class="btn btn-outline-secondary btn-lg active w-100">
+              Archive
+          </button>
+        </a>
+      {% else %}
+        <a href="{% url 'emails:email_archive'%}">
+          <button type="button" class="btn btn-outline-secondary btn-lg w-100">
+              Archive
+          </button>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

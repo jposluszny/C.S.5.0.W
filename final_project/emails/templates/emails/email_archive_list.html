@@ -1,0 +1,108 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %} Archived {% endblock %}
+{% block script %}
+  <script src="{% static 'library/search.js'%}" charset="utf-8"></script>
+{% endblock %}
+{% block body %}
+
+  <!-- Display alerts -->
+  <div class="row">
+    <div class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <div class="alert alert-info alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>INFO!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Include dashboard -->
+  {% include "emails/mailbox_dashboard.html" %}
+  <hr>
+
+  <!-- Display archived emails -->
+  <main style="padding:0 12px;">
+    <div class="row itemsHeader">
+      <div class="col-md-5">
+        <p class="m-0 p-2">SUBJECT</p>
+      </div>
+      <div class="col-md-3">
+        <p class="m-0 p-2">FROM</p>
+      </div>
+      <div class="col-md-4">
+        <p class="m-0 p-2">DATE</p>
+      </div>
+    </div>
+    {% for email in object_list %}
+      <a class="text-reset text-decoration-none " href="{% url 'emails:email_details' email.pk %}">
+        <div id="{{email.pk}}" class="row text-muted shadow py-3 py-md-1 text-center shadowItem ">
+          <div class="col-md-5">
+            <p class="p-2 m-0">{{email.subject}}</p>
+          </div>
+          <div class="col-md-3">
+            <p class="p-2 m-0">{{email.sender|default_if_none:"Library Staff"}}</p>
+          </div>
+          <div class="col-md-4">
+            <p class="p-2 m-0">{{email.timestamp}}</p>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </main>
+
+  <!-- Create pagination -->
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-center">
+      {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><div id="numPages">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</div></li>
+            {% if page_obj.number != 1 %}
+              <li class="page-item"><a class="page-link" href="{% url 'emails:email_archive' %}?q={{request.GET.q}}&page=1">First</a></li>
+            {% endif %}
+            {% if page_obj.has_previous %}
+              {% if page_obj.number != 2 %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'emails:email_archive' %}?q={{request.GET.q}}&page={{page_obj.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="{% url 'emails:email_archive' %}?q={{request.GET.q}}&page={{page_obj.number}}">{{page_obj.number}}</a></li>
+            {% if page_obj.has_next %}
+              {% if page_obj.number|add:"1" != page_obj.paginator.num_pages %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'emails:email_archive' %}?q={{request.GET.q}}&page={{page_obj.next_page_number}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+            {% if page_obj.number|add:"1" <= page_obj.paginator.num_pages %}
+              <li class="page-item"><a class="page-link" href="{% url 'emails:email_archive' %}?q={{request.GET.q}}&page={{page_obj.paginator.num_pages}}">Last</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

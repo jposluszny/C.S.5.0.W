@@ -1,0 +1,87 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block title %}User reviews{% endblock %}
+{% block body %}
+  <!-- Display alerts -->
+  <div class="row">
+    <div id="alertContainer" class="col">
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>ERROR!</strong> {{message}}
+            </div>
+          {% endif %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>SUCCES!</strong> {{message}}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Display reviews -->
+  <div class="row">
+    <div class="col">
+      <h3>Reviews of user <a href="{% url 'users:profile' author.pk %}">{{author.username}}:</a></h3>
+      {% for review in page_obj %}
+        <div class="row bg-white my-3 p-3 shadow">
+          <div class="col">
+            <small><a href="{% url 'users:profile' user.pk %}">{{review.author.username}}</a>
+              reviewed <a href="{% url 'library:book_details' review.book.pk %}">
+              {{review.book.title}}</a> on {{review.creation_date}}
+            </small>
+            <p class="my-2">{{review.content}}</p>
+          </div>
+        </div>
+      {% empty%}
+        <h6 class="pt-4">User hasn't written any reviews yet.</h5>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <!-- Display pagination -->
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><div id="numPages">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</div></li>
+            {% if page_obj.number != 1 %}
+              <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            {% endif %}
+            {% if page_obj.has_previous %}
+              {% if page_obj.number != 2 %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="?page={{page_obj.number}}">{{page_obj.number}}</a></li>
+            {% if page_obj.has_next %}
+              {% if page_obj.number|add:"1" != page_obj.paginator.num_pages %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endif %}
+            {% if page_obj.number|add:"1" <= page_obj.paginator.num_pages %}
+              <li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'library/layout.html'%}
+{% load static %}
+{% block  title %}
+  Confirm delete
+{% endblock %}
+{% block body %}
+  <div class="row">
+    <div class="col">
+      <form class="my-4" method="post">
+        {% csrf_token %}
+        <h3>Do you really want to delete the user "{{object}}"?</h3>
+        <a href="{% url 'users:profile' object.pk%}"><button class="btn btn-outline-info" type="button" name="button">Cancel</button></a>
+        <input  class="btn btn-outline-danger" type="submit" name="" value="Confirm">
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
