@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Advanced Search</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="master.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    </head>
+    <body>
+      <div class="container">
+        <div class="nav">
+          <a href="index.html">Google Search</a>
+          <a href="images.html">Image Search</a>
+        </div>
+        <div class="logo">
+          <div class="logoImage">
+            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+          </div>
+        </div>
+        <div class="advancedSearch">
+          <form action="https://google.com/search" method="GET">
+            <label for="as_q">All of these words:</label>
+            <input id="as_q" type="text" name="as_q" value="">
+            <label for="as_epq">This exact word or phrase:</label>
+            <input id="as_epq" type="text" name="as_epq" value="">
+            <label for="as_oq">Any of these words:</label>
+            <input id="as_oq" type="text" name="as_oq" value="">
+            <label for="as_eq">None of these words:</label>
+            <input id="as_eq" type="text" name="as_eq" value="">
+            <input type="submit" name="" value="Advanced Search">
+          </form>
+        </div>
+      </div>
+    </body>
+</html>
