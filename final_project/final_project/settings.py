@@ -25,7 +25,7 @@ SECRET_KEY = '-6zt4$@q(1!_=y2vze_mgurqrjavfewku1#-l@f+!ywu43dicy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wektor78.pythonanywhere.com']
 
 
 # Application definition
