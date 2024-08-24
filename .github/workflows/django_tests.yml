@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'final_project/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [ emails, library, users ]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: cd final_project/${{ matrix.app }} && pip install -r requirements.txt
+    - name: Test with pytest
+      run: cd final_project/${{ matrix.app }} && pytest
