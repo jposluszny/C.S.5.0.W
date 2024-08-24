@@ -2,7 +2,11 @@
 https://cs50.harvard.edu/web/2020/projects/final/capstone/
 
 ### How to run your application
-I used django 3.2.25. Last recomended python version for this version of django is python3.10. I installed python3.10 and its venv globally. Then I created venv using python3.10, activated venv and I installed 	requirements.txt.
+The application is available on:
+https://wektor78.pythonanywhere.com/
+
+- Login:  **staff_member** 
+- Password:  **Password321**
 
 ### Project description
 There are 3 groups of users which can use the app:
