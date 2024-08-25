@@ -2,11 +2,14 @@ name: CI
 
 on:
   workflow_dispatch:
+ 
   
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DJANGO_SETTINGS_MODULE: final_project.settings
     strategy:
       matrix:
         app: [ emails, library, users ]
