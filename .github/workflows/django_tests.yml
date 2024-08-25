@@ -20,4 +20,4 @@ jobs:
     - name: Install dependencies
       run: cd final_project && pip install -r requirements.txt
     - name: Test with pytest
-      run: cd final_project/${{ matrix.app }} && pytest
+      run: cd final_project/${{ matrix.app }} && pytest ${{ matrix.app }}
