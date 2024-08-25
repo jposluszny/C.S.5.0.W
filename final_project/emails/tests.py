@@ -101,7 +101,7 @@ class EmailTestCase(TestCase):
         '''Each user receives welcome email after registration'''
 
         user = User.objects.get(username='user3')
-        return self.assertEqual(user.emails_received.count(), 2)
+        return self.assertEqual(user.emails_received.count(), 1)
 
     def test_get_email_inbox_loggedin_users(self):
         '''Received emails should be returned for logged in users'''
