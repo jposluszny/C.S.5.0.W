@@ -21,8 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY='-6zt4$@q(1!_=y2vze_mgurqrjavfewku1#-l@f+!ywu43dicy'
+SECRET_KEY = config('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -78,23 +78,23 @@ WSGI_APPLICATION = 'final_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 
-    #   'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': config('NAME'),
-    #     'USER': config('USER'),
-    #     'PASSWORD': config('PASSWORD'),
-    #     'HOST': config('HOST'),
-    #     'PORT': 3306,
-    #     'default-character-set':'utf8',
-    #     'OPTIONS': {
-    #         'sql_mode': 'traditional',
-    #     }
-    # },
+      'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('NAME'),
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
+        'HOST': config('HOST'),
+        'PORT': 3306,
+        'default-character-set':'utf8',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
+    },
 }
 
 
