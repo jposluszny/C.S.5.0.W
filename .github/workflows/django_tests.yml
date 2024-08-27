@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE20:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       NAME: ${{ secrets.NAME }}
       USER: ${{ secrets.USER }}
