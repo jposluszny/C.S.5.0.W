@@ -103,7 +103,10 @@
             </div>
           </div>
         </div>
+      {% empty %}
+        <h6 class="m-4">There are no pending requests at the moment.</h6>
       {% endfor %}
+      
     </div>
 
     <!-- Loans block -->
@@ -152,6 +155,8 @@
             </div>
           </div>
         </div>
+      {% empty %}
+        <h6 class="m-4">We have no loans at this time.</h6>
       {% endfor %}
     </div>
 
@@ -201,6 +206,9 @@
             </div>
           </div>
         </div>
+        {% empty %}
+        <h6 class="m-4">There are no overdue loans at the moment.</h6>
+        
       {% endfor %}
     </div>
 
@@ -247,8 +255,10 @@
       </div>
     </div>
     <div id="loansContainer">
-
     </div>
+    {% if not user.borrowing.all %}
+        <h6 class="m-4">You don't have any books that are borrowed.</h6>
+      {% endif %}
     {% endif %}
   {% endif %}
 {% endblock %}

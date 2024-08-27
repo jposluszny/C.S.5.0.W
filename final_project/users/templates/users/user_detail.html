@@ -106,6 +106,7 @@
           </div>
         </div>
       </div>
+
       {% for loan in user.borrowing.all  %}
 
         <!-- If loan is overdue add red background  -->
@@ -156,14 +157,20 @@
             </div>
           </div>
         {% endif %}
+        {% empty%}
+          <h6 class="m-4">The user doesn't have any borrowed books at the moment.</h6>
       {% endfor %}
     </div>
 
     <hr class="mt-5 mb-4">
     <!-- Container for history of borrowing -->
     <small class="d-block fw-bold">History:</small>
-    <div id="historyContainer" class="text-muted mb-3">
+    <div id="historyContainer" class="text-muted mb-5">
 
+      <!-- Display the message if user does not have any borrowing history -->
+      {% if not user.history_borrowing.all %}
+        <h6 class="m-4">The user doesn't have any borrowing history.</h6>
+      {% endif %}
     </div>
   </div>
 </div>
