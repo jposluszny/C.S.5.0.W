@@ -52,14 +52,14 @@
       {% if request.user.is_authenticated %}
         {% if request.user.staff_member %}
           <!-- Display delete and update buttons -->
-          <a href="{% url 'library:loan_update' object.pk %}"><button class="btn btn-outline-info">Update</button></a>
-          <a href="{% url 'library:loan_delete' object.pk %}"><button class="btn btn-outline-danger">Delete</button></a>
+          <a href="{% url 'library:loan_update' object.pk %}"><button class="btn btn-outline-info my-1">Update</button></a>
+          <a href="{% url 'library:loan_delete' object.pk %}"><button class="btn btn-outline-danger my-1">Delete</button></a>
 
           <!-- If there is a fee modal will be displayed to ensure the fee was paid -->
           {% if object.status == "accepted" %}
             {% if object.fee %}
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#confirmPayment">Return book</button>
+              <button type="button" class="btn btn-outline-dark my-1" data-bs-toggle="modal" data-bs-target="#confirmPayment">Return book</button>
 
               <!-- Modal -->
               <div class="modal fade" id="confirmPayment" tabindex="-1" aria-labelledby="confirmPaymentLabel" aria-hidden="true">
@@ -89,7 +89,7 @@
               <form class="d-inline" action="{% url 'library:return_book' %}" method="post">
                 {% csrf_token %}
                 <input  type="hidden" name="bookpk" value="{{object.book.pk}}">
-                <input id="returnBtn" class="btn btn-outline-dark" type="submit" name="" value="Return book">
+                <input id="returnBtn" class="btn btn-outline-dark my-1" type="submit" name="" value="Return book">
               </form>
             {% endif %}
 
@@ -98,10 +98,10 @@
             <form  class="d-inline " action="{% url 'library:return_book' %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="bookpk" value="{{object.book.pk}}">
-              <input id="returnBtn" class="d-none btn btn-outline-dark" type="submit" name="" value="Return book">
+              <input id="returnBtn" class="d-none btn btn-outline-dark my-1" type="submit" name="" value="Return book">
             </form>
-            <button id="acceptBtn" data-bookpk={{object.book.pk}} class="btn btn-outline-success">Accept</button>
-            <button id="rejectBtn" data-bookpk={{object.book.pk}} class="btn btn-outline-warning">Reject request</button>
+            <button id="acceptBtn" data-bookpk={{object.book.pk}} class="btn btn-outline-success my-1">Accept</button>
+            <button id="rejectBtn" data-bookpk={{object.book.pk}} class="btn btn-outline-warning my-1">Reject request</button>
 
             <form id="rejectForm" class="mt-3 px-5 d-none" action="{% url 'library:reject_request' %}" method="post">
               {% csrf_token %}

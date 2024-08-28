@@ -45,11 +45,11 @@
 
       <!-- Display only for staff members -->
       {% if request.user.staff_member %}
-        <a href="{% url 'users:delete' object.pk%}"><button class="btn btn-outline-danger">Delete User</button></a>
-        <a href="{% url 'users:update' object.pk %}"><button class="btn btn-outline-success">Update Profile</button></a>
+        <a href="{% url 'users:delete' object.pk%}"><button class="btn btn-outline-danger my-1">Delete User</button></a>
+        <a href="{% url 'users:update' object.pk %}"><button class="btn btn-outline-success my-1">Update Profile</button></a>
       {% endif %}
       {% if object == request.user %}
-        <a href="{% url 'users:password_change' %}"><button class="btn btn-outline-dark">Change Password</button></a>
+        <a href="{% url 'users:password_change' %}"><button class="btn btn-outline-dark my-1">Change Password</button></a>
       {% endif %}
     </div>
   </div>

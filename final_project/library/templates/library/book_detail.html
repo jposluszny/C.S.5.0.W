@@ -74,18 +74,18 @@
 
           <!-- For staff members display update and delete button -->
           {% if request.user.staff_member %}
-            <a href="{% url 'library:book_update' object.pk %}"><button class="btn btn-outline-info">Update</button></a>
-            <a href="{% url 'library:book_delete' object.pk %}"><button class="btn btn-outline-danger">Delete</button></a>
+            <a href="{% url 'library:book_update' object.pk %}"><button class="btn btn-outline-info my-1">Update</button></a>
+            <a href="{% url 'library:book_delete' object.pk %}"><button class="btn btn-outline-danger my-1">Delete</button></a>
           {% endif %}
 
           <!-- If book is available display borrow button -->
           {% if not object.loan %}
-            <button id="borrowBtn" data-pk={{object.pk}} class="btn btn-outline-success">Borrow</button>
+            <button id="borrowBtn" data-pk={{object.pk}} class="btn btn-outline-success my-1">Borrow</button>
           {% else %}
 
             <!-- Display renew button if user borrowed the book and is allowed to renew it -->
             {% if object.loan.user == request.user and object.loan.can_renew %}
-              <button id="renewBtn" data-pk={{object.pk}} class="btn btn-outline-dark">Renew</button>
+              <button id="renewBtn" data-pk={{object.pk}} class="btn btn-outline-dark my-1">Renew</button>
             {% endif %}
           {% endif %}
         {% endif %}
