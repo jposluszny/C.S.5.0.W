@@ -371,40 +371,44 @@ def reject_request(request):
         user = request.user
         data = request.POST
         book = get_object_or_404(Book, pk=data.get('bookpk'))
-        loan_query = Loan.objects.select_for_update().filter(book=book)
-        if loan_query.count() == 1 and loan_query.get().status == 'pending':
-            # Get reason of rejection
-            reject_message = data.get('rejectMessage')
 
-            # Use transaction to ensure that history object was created and loan was deleted
-            with transaction.atomic():
+        # Use transaction to ensure that history object was created and loan was deleted
+        with transaction.atomic():
+            loan_query = Loan.objects.select_for_update().filter(book=book)
+            if loan_query.count() == 1 and loan_query.get().status == 'pending':
+                # Get reason of rejection
+                reject_message = data.get('rejectMessage')
+
+                # Delete request
                 loan = loan_query.get()
                 loan.status = 'rejected'
                 loan.save()
                 loan.delete()
+
+                # Create history object
                 History.objects.create(
                     book=loan.book, user=loan.user,
                     fee=loan.fee,  status=loan.status, can_renew=loan.can_renew,
                     is_overdue=loan.is_overdue, reject_message=f'"{reject_message}"')
-            message = f'The request for the book \"{book.title}\" by the user \"{loan.user.username}\" has been rejected.'
-            messages.success(request, message)
-            return redirect(reverse('library:book_details', kwargs={'pk': loan.book.pk}))
-        elif loan_query.count() == 0:
+                message = f'The request for the book \"{book.title}\" by the user \"{loan.user.username}\" has been rejected.'
+                messages.success(request, message)
+                return redirect(reverse('library:book_details', kwargs={'pk': loan.book.pk}))
+            elif loan_query.count() == 0:
 
-            # Dispalay error message if there is no request
-            message = f'There is no such request for \"{book.title}\" by {book.author}.'
-            messages.error(request, message)
+                # Dispalay error message if there is no request
+                message = f'There is no such request for \"{book.title}\" by {book.author}.'
+                messages.error(request, message)
+                return redirect(reverse('library:home'))
+            elif loan_query.get().status != 'pending':
+                # Dispalay error message if status of request is not pending
+                message = f'There is no pending request for \"{book.title}\" by {book.author}.'
+                messages.error(request, message)
+                return redirect(reverse('library:home'))
+            else:
+                # Dispalay error message if there is more than one request
+                message = f'Something went wrong.'
+                messages.error(request, message)
             return redirect(reverse('library:home'))
-        elif loan_query.get().status != 'pending':
-            # Dispalay error message if status of request is not pending
-            message = f'There is no pending request for \"{book.title}\" by {book.author}.'
-            messages.error(request, message)
-            return redirect(reverse('library:home'))
-        else:
-            # Dispalay error message if there is more than one request
-            message = f'Something went wrong.'
-            messages.error(request, message)
-        return redirect(reverse('library:home'))
 
     messages.error(request, 'Wrong request.')
     return redirect(reverse('library:home'))

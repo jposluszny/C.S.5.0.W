@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['wektor78.pythonanywhere.com','127.0.0.1']
 
@@ -78,23 +78,23 @@ WSGI_APPLICATION = 'final_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 
-      'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('NAME'),
-        'USER': config('USER'),
-        'PASSWORD': config('PASSWORD'),
-        'HOST': config('HOST'),
-        'PORT': 3306,
-        'default-character-set':'utf8',
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        }
-    },
+    #   'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': config('NAME'),
+    #     'USER': config('USER'),
+    #     'PASSWORD': config('PASSWORD'),
+    #     'HOST': config('HOST'),
+    #     'PORT': 3306,
+    #     'default-character-set':'utf8',
+    #     'OPTIONS': {
+    #         'sql_mode': 'traditional',
+    #     }
+    # },
 }
 
 
