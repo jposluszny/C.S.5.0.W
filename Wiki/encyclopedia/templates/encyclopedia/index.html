@@ -1,0 +1,32 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info">
+                        <strong>Info!</strong> {{message}}
+                    </div>
+                {% endfor %}
+    {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1>All Pages</h1>
+            <ul>
+                {% for entry in entries %}
+                <li><a href="{% url 'encyclopedia:entry' entry %}">
+                    {{entry}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}

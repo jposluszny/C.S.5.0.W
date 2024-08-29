@@ -1,0 +1,37 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mt-2">
+        <h3>Categories</h3>
+        <ul class="nav flex-column">
+          {% for category in categories %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'categories' category.category%}">{{category.category}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-9">
+        {% for bid in bids %}
+          <div class="row mt-3" >
+            <div class="col-sm-4 p-3 bg-secondary minh d-flex justify-content-center align-items-center" >
+              <div class="mw-100">
+                <img class="mw-100" src="{{bid.listing.url}}" alt="Image of {{bid.listing.title}}">
+              </div>
+            </div>
+            <div class="col-sm-8  p-3 bg-bid">
+              <h3><a href="{% url 'listing' bid.listing.pk %}">{{bid.listing.title}}</a></h3>
+              <p class="display-4"> $ {{bid.bid}}</p>
+              <p> <small class="font-weight-bold">Description:</small> {{bid.listing.description}}</p>
+              <p><small class="font-weight-bold">Created: </small>{{bid.listing.created}}</p>
+              <p><small class="font-weight-bold">Category: </small><a href="/categories/{{bid.listing.category}}/">{{bid.listing.category}}</a></p>
+            </div>
+          </div>
+        {% empty %}
+        <div class="alert alert-info mt-2">
+          <strong>Info!</strong> There is no results.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+{% endblock %}

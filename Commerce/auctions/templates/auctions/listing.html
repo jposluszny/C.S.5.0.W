@@ -1,0 +1,100 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class="container-fluid p-3">
+      <div class="row mb-4" >
+        <div class="col-md-4 p-3 col-sm-6 bg-secondary minh d-flex justify-content-center align-items-center" >
+          <div class="mw-100">
+            <img class="mw-100" src="{{listing.url}}" alt="Image of {{listing.title}}">
+          </div>
+        </div>
+        <div class="col-md-4 p-3 col-sm-6 bg-bid">
+          <h2>Listing: {{listing.title}}</h2>
+          {% if user.is_authenticated %}
+              {% if in_watchlist %}
+                <form class="" action="{% url 'watchlist'%}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="remove" value="{{listing.pk}}">
+                  <input type="submit" class="btn btn-secondary my-1 w-100" value="Remove from Watchlist">
+                </form>
+              {% endif %}
+          {% endif %}
+          {% if bids.0.active %}
+            {% if user.is_authenticated %}
+                {% if not in_watchlist %}
+                  <form class="" action="{% url 'watchlist'%}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="add" value="{{listing.pk}}">
+                    <input type="submit" class="btn btn-secondary my-1 w-100" value="Add to Watchlist">
+                  </form>
+                {% endif %}
+                {% if user.username == listing.user.username %}
+                  <form class="" action="{% url 'listing' listing.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="close" value="{{listing.pk}}">
+                    <input type="submit" class="btn btn-secondary my-1 w-100" value="Close Auction">
+                  </form>
+                {% endif %}
+            {% endif %}
+          {% else %}
+              <h1 class="text-success font-weight-bold">Closed</h1>
+                {% if user.username == bids.0.user.username %}
+              <h3 class="text-success font-weight-bold">You have won the auction.</h3>
+                {% else %}
+              <h3 class="text-success font-weight-bold">{{bids.0.user.username}} has won the auction.</h3>
+                {% endif %}
+          {% endif %}
+          <h6 class="mt-2 font-weight-bold">Description:</h6>
+          <p>{{listing.description}}</p>
+          <h3 class="font-weight-bold">$ {{ bids.0.bid}}</h3>
+          <p>{{bids|length}} bid(s) so far.
+            {% if user == bids.0.user %}
+            <b class="text-success">Your bid is the current bid.</b>
+            {% endif %}
+          </p>
+          {% if bids.0.active and user.is_authenticated %}
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-danger">
+                    {{message}}
+                  </div>
+                {% endfor %}
+              {% endif %}
+              <form class="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="hidden" name="place" value="{{listing.pk}}">
+                <input type="submit" class="btn btn-secondary my-1 w-100" value="Submit">
+              </form>
+          {% endif %}
+            <h4 class="mt-2">Details</h4>
+              <ul>
+                <li>Listed by <b>{{bids.0.listing.user}}</b></li>
+                <li>Created: {{bids.0.listing.created}}</li>
+                <li>Bid placed: {{bids.0.created}}</li>
+                <li>Category <a href="{% url 'categories' listing.category %}">{{listing.category}}</a></li>
+              </ul>
+        </div>
+        <div class="col-md-4 bg-bid p-3">
+          <form class="" action="{% url 'listing' listing.pk %}" method="post">
+            {% csrf_token %}
+            {{form_comment.as_p}}
+            <input type="hidden" name="comment" value="{{listing.pk}}">
+            {% if user.is_authenticated %}
+              <input type="submit" class="btn btn-secondary my-1 w-100" value="Add comment">
+            {% else %}
+              <input title='Login to add comments!' disabled type="submit" class="btn btn-secondary" value="Add comment">
+            {% endif %}
+          </form>
+        </div>
+      </div>
+      {% for comment in comments %}
+      <div class="row">
+        <div class="col">
+          <h6 class="font-weight-bold">{{ comment.user }} on {{ comment.created }}</h6>
+          <p>{{comment.content}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}

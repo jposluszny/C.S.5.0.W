@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+  <div class="container p-3">
+    <h2>Active Listings</h2>
+    {% for bid in bids %}
+      <div class="row mt-4" >
+        <div class="col-lg-3 col-sm-5 p-3 bg-secondary minh d-flex justify-content-center align-items-center" >
+          <div class="mw-100">
+            <img class="mw-100" src="{{bid.listing.url}}" alt="Image of {{bid.listing.title}}">
+          </div>
+        </div>
+        <div class="col-lg-9 col-sm-7 p-3 bg-bid">
+          <h3><a href="{% url 'listing' bid.listing.pk %}">{{bid.listing.title}}</a></h3>
+          <p class="display-4"> $ {{bid.bid}}</p>
+          <p> <small class="font-weight-bold">Description:</small> {{bid.listing.description}}</p>
+          <p><small class="font-weight-bold">Created: </small>{{bid.listing.created}}</p>
+          <p><small class="font-weight-bold">Category: </small><a href="/categories/{{bid.listing.category}}/">{{bid.listing.category}}</a></p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="alert alert-info">
+        <strong>Info!</strong> There is no active listings.
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

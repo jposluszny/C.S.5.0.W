@@ -1,0 +1,24 @@
+body {
+background-color: #E7E9EB;
+}
+.bg-bid{
+  background-color: white;
+}
+.minh{
+  min-height: 300px;
+}
+form li{
+  font-size: 1.5rem;
+  color: red;
+  font-style: italic;
+  list-style-type: none;
+}
+.create{
+  width: 400px;
+}
+.create label{
+  display:block;
+}
+input, textarea{
+  width: 100%;
+}

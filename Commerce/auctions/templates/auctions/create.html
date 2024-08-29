@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <div class="container p-3 ">
+    <h2>Create a new listing</h2>
+    <form class="create" method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-secondary" value="Submit">
+    </form>
+  </div>
+<script type="text/javascript">
+  document.querySelector('input[type="url"]').type = 'text';
+  document.querySelector('input[type="number"]').type = 'text';
+</script>
+{% endblock %}
