@@ -346,11 +346,11 @@ class LibraryTestCase(TestCase):
         self.assertNotContains(
             response, '<button id="borrowBtn" data-pk=2 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button id="renewBtn" data-pk=2 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=2 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
 
     def test_get_book_detail_page_book_borrowed_by_not_loggedin_user(self):
         '''Get the book detail page for lent book should return status code 200, there should be a link to add review button, and status -pending. There should be a renew button. There should not be a renew button, a borrow button, a delete button, an update button'''
@@ -450,11 +450,11 @@ class LibraryTestCase(TestCase):
         self.assertNotContains(
             response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
 
     def test_get_book_detail_page_book_borrowed_by_not_loggedin_user(self):
         '''Get the book detail page for lent book should return status code 200, there should be a link to add review button, and status -pending. There should be a renew button, a delete button, an update button. There should not be a renew button, a borrow button'''
@@ -495,11 +495,11 @@ class LibraryTestCase(TestCase):
         self.assertNotContains(
             response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
 
     def test_get_none_existing_book_page(self):
         '''Getting none existing book page should raise 404'''
