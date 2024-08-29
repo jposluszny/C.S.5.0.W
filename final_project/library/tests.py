@@ -306,13 +306,13 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertContains(
-            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
         self.assertContains(
             response, 'Book is available', status_code=200)
 
@@ -344,7 +344,7 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="borrowBtn" data-pk=2 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=2 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertContains(
             response, '<button id="renewBtn" data-pk=2 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
         self.assertNotContains(
@@ -405,13 +405,13 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertContains(
-            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
         self.assertContains(
             response, 'Book is available', status_code=200)
 
@@ -424,13 +424,13 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="borrowBtn" data-pk=1 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=1 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="renewBtn" data-pk=1 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=1 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
         self.assertContains(
             response, 'pending', status_code=200)
 
@@ -448,7 +448,7 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertContains(
             response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
         self.assertContains(
@@ -465,13 +465,13 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="borrowBtn" data-pk=2 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=2 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="renewBtn" data-pk=2 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
+            response, '<button id="renewBtn" data-pk=2 class="btn btn-outline-dark my-1">Renew</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
 
     def test_get_book_detail_page_book_already_renewed_by_staff(self):
         '''Get the book detail page for lent book should return status code 200, there should be a link to add review button, and status -pending. There should not be a renew button, a borrow button. There should be a delete button, an update button'''
@@ -493,7 +493,7 @@ class LibraryTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Show the add review form', status_code=200, html=True)
         self.assertNotContains(
-            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success">Borrow</button>', status_code=200, html=True)
+            response, '<button id="borrowBtn" data-pk=6 class="btn btn-outline-success my-1">Borrow</button>', status_code=200, html=True)
         self.assertNotContains(
             response, '<button id="renewBtn" data-pk=6 class="btn btn-outline-dark">Renew</button>', status_code=200, html=True)
         self.assertContains(
@@ -771,15 +771,15 @@ class LibraryTestCase(TestCase):
         response = self.client.get(reverse('library:loan_details', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, f'<button id="acceptBtn" data-bookpk="1" class="btn btn-outline-success">Accept</button>', status_code=200, html=True)
+            response, f'<button id="acceptBtn" data-bookpk="1" class="btn btn-outline-success my-1">Accept</button>', status_code=200, html=True)
         self.assertContains(
-            response, f'<button id="rejectBtn" data-bookpk="1" class="btn btn-outline-warning">Reject request</button>', status_code=200, html=True)
+            response, f'<button id="rejectBtn" data-bookpk="1" class="btn btn-outline-warning my-1">Reject request</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, '<input id="returnBtn" class="btn btn-outline-dark" type="submit" name="" value="Return book">', status_code=200, html=True)
+            response, '<input id="returnBtn" class="btn btn-outline-dark my-1" type="submit" name="" value="Return book">', status_code=200, html=True)
 
     def test_get_loan_detail_page_logged_in_staff(self):
         '''Get the request detail page by staff members should return status code 200 and there should be update button, delete button, return buttton and should not be accept button, reject request button'''
@@ -789,15 +789,15 @@ class LibraryTestCase(TestCase):
         response = self.client.get(reverse('library:loan_details', kwargs={'pk': 2}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(
-            response, '<button class="btn btn-outline-info">Update</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-info my-1">Update</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<button class="btn btn-outline-danger">Delete</button>', status_code=200, html=True)
+            response, '<button class="btn btn-outline-danger my-1">Delete</button>', status_code=200, html=True)
         self.assertContains(
-            response, '<input id="returnBtn" class="btn btn-outline-dark" type="submit" name="" value="Return book">', status_code=200, html=True)
+            response, '<input id="returnBtn" class="btn btn-outline-dark my-1" type="submit" name="" value="Return book">', status_code=200, html=True)
         self.assertNotContains(
-            response, f'<button id="acceptBtn" data-bookpk="2" class="btn btn-outline-success">Accept</button>', status_code=200, html=True)
+            response, f'<button id="acceptBtn" data-bookpk="2" class="btn btn-outline-success my-1">Accept</button>', status_code=200, html=True)
         self.assertNotContains(
-            response, f'<button id="rejectBtn" data-bookpk="2" class="btn btn-outline-warning">Reject request</button>', status_code=200, html=True)
+            response, f'<button id="rejectBtn" data-bookpk="2" class="btn btn-outline-warning my-1">Reject request</button>', status_code=200, html=True)
 
     def test_get_request_detail_page_unlogged_users_are_redirected(self):
         '''Unlogged users should be redirected to the login page'''
