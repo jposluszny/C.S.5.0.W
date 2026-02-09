@@ -1,12 +1,17 @@
 ## Specification
 https://cs50.harvard.edu/web/2020/projects/final/capstone/
 
-## How to run the application
-The application is available on: https://wektor78.pythonanywhere.com/
+## How to Run the Application
 
-Login: **staff_member**
+The application is available at: https://c-s-5-0-w.onrender.com
 
-Password: **Password321**
+Accounts:
+
+Login: **staff_member** / Password: **Password321**
+
+Login: **regular_user** / Password: **Password321**
+
+**Please do not change the passwords or delete these accounts.**
 
 
 ## Project description
