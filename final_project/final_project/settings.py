@@ -28,6 +28,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['wektor78.pythonanywhere.com',
 				'127.0.0.1',
+				'localhost',
 				'c-s-5-0-w.onrender.com']
 
 
