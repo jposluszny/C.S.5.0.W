@@ -27,7 +27,7 @@ COPY . /app/
 
 # Collect static files
 # This is required for Django to serve CSS, JS, and images in production
-RUN python manage.py collectstatic --no-input
+RUN python manage.py collectstatic --noinput --clear || true
 
 # Expose the port that the app runs on
 # Render uses port 10000 by default
