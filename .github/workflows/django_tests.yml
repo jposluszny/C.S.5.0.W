@@ -28,6 +28,6 @@ jobs:
       run: |
         python3.10 -m venv venv
         source venv/bin/activate
-        cd final_project
+        cd Capstone
         python -m pip install -r requirements.txt
         python manage.py test ${{ matrix.app }}
