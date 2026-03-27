@@ -34,5 +34,4 @@ RUN python manage.py collectstatic --noinput --clear || true
 EXPOSE 10000
 
 # Start the application using Gunicorn
-# Replace 'final_project' with the name of your Django project directory (containing wsgi.py)
 CMD ["gunicorn", "final_project.wsgi:application", "--bind", "0.0.0.0:10000"]
