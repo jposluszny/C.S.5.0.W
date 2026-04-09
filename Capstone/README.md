@@ -1,81 +1,57 @@
-# Library Management System (CS50W Capstone)
+# CS50's Web Programming with Python and JavaScript
+### Harvard University | Project Portfolio
 
-## 📊 Project Overview
-This project was developed as the Final Capstone Project for Harvard's **CS50’s Web Programming with Python and JavaScript**. It is a comprehensive library and book management system designed to handle different levels of user access, book borrowings, reviews, and administrative tasks.
-
-The application uses **Django** on the backend and features an integrated email system, automated fee calculations, and a fully functional dashboard for staff members.
+This repository contains my solutions to the projects from Harvard University's **CS50W** course. The curriculum focuses on the design and implementation of web applications using Python, JavaScript, and SQL with frameworks like Django and React.
 
 ---
 
-## 📜 Project Requirements
-The project was built to satisfy the final capstone requirements of the CS50W curriculum, which demands a distinct, sufficiently complex project entirely designed and implemented by the student.
+## 🏆 Featured Project (Final)
+### **Library Management System**
+This is the capstone project of the course, where I implemented a production-ready system with a focus on code quality, testing, and automation.
 
-* **Full Specification:** [CS50W Final Project: Capstone](https://cs50.harvard.edu/web/2020/projects/final/capstone/)
-
----
-
-## 🛠️ Tech Stack
-* **Backend:** Python 3, Django
-* **Database:** Django ORM
-* **Frontend:** JavaScript, HTML5, CSS3, Bootstrap
-* **Hosting:** Render
-
----
-
-### 🖼️ Project Preview
-*A look at the application's interface where users can browse books and manage their accounts.*
-![Project Preview](preview.png)
+* **Core Stack:** Django, PostgreSQL, JavaScript, Bootstrap.
+* **Key Features:** Automated loan tracking, overdue fine calculation, inventory management, and role-based access control (Staff vs. Users).
+* **Engineering Excellence:**
+    * **Automated Testing:** Comprehensive suite using Django `TestCase` covering business logic, permissions, and edge cases.
+    * **CI/CD:** Integrated **GitHub Actions** to automatically run tests on every push.
+    * **Containerization:** Fully Dockerized environment using **Docker** and **Docker Compose**.
+    * **Production Ready:** Configured with **Gunicorn** and optimized for deployment (Render/Heroku).
+* 👉 **[Explore the Final Project](./final_project)**
 
 ---
 
-## 🚀 Features Included
+## 📚 Project Roadmap
 
-The application is structured around three main user roles, each with specific permissions:
+Each directory represents a milestone in the course, progressing from basic front-end design to complex full-stack engineering.
 
-* **Unlogged Users:**
-  * Search the database for books.
-  * View detailed information about specific books.
-  * Read book reviews left by other users.
-
-* **Logged-in Users (Regular):**
-  * Full authentication system (Login / Logout / Change Password).
-  * Borrow and renew books.
-  * View currently borrowed books and full borrowing history.
-  * Write and publish reviews for books.
-  * View profile details.
-  * Internal communication: Send, compose, and receive emails.
-
-* **Staff Members (Admin):**
-  * Have all the permissions of a Regular User (including borrowing books).
-  * **Main Dashboard:** Instantly view user book requests, all currently lent books, and overdue books.
-  * **User Management:** Register new users, update or delete user accounts (including their own), and filter all user accounts.
-  * **Book Management:** Accept or reject user borrowing requests, and process book returns.
-  * **Fee System:** The application automatically calculates overdue fees. Staff members are responsible for confirming when a user has paid their fees.
+| Project | Title | Tech Stack | Brief Description |
+| :--- | :--- | :--- | :--- |
+| **0** | [Search](./Search) | HTML, CSS | A front-end clone of Google Search with Image and Advanced Search capabilities. |
+| **1** | [Wiki](./Wiki) | Django, Markdown | A Wikipedia-like online encyclopedia with entry creation and Markdown-to-HTML conversion. |
+| **2** | [Commerce](./Commerce) | Django, SQL | An e-commerce auction site (eBay clone) with bidding, comments, and watchlists. |
+| **3** | [Mail](./Mail) | Django, JS (ES6) | A Single Page Application (SPA) email client with dynamic UI updates. |
+| **4** | [Network](./Network) | Django, JS, ORM | A social network (Twitter clone) featuring posts, follows, likes, and pagination. |
+| **Final**| [Library System](./Capstone)| **Full Stack / DevOps**| **A robust library management system with CI/CD and Docker integration.** |
 
 ---
 
-## 🌐 How to Access the Application
+## 🛠 Skills & Tools
 
-The application is currently deployed and live. You do not need to install it locally to test its features.
-
-1.  **Visit the Live App:**
-    
-    Go to: [https://c-s-5-0-w.onrender.com](https://c-s-5-0-w.onrender.com)
-
-
-2.  **Test Accounts:**
-    You can log in using the following pre-configured accounts to test different permission levels:
-
-    * **Staff Account:** `Login: staff_member` 
-      `Password: Password321`
-
-    * **Regular User Account:** `Login: regular_user` 
-      `Password: Password321`
-
-
-3.  **Important Notice:**
-    
-    *Please do not change the passwords or delete these test accounts, so others can evaluate the project.*
+* **Backend:** Python 3, Django (Models/ORM, Authentication, Middleware, REST APIs).
+* **Frontend:** JavaScript (ES6+), React, HTML5, CSS3 (Sass, Bootstrap).
+* **Database:** SQL Design, PostgreSQL, SQLite.
+* **DevOps & Infrastructure:** Docker, Docker Compose, GitHub Actions (CI/CD), Gunicorn.
+* **Security & QA:** Unit/Integration Testing, CSRF Protection, XSS Mitigation, Environment Variable Management.
 
 ---
-*Created by **jposluszny** as part of the CS50W curriculum.*
+
+## 🚦 Getting Started
+
+Each project folder contains its own detailed `README.md` with specific setup instructions. 
+
+---
+
+## 🎓 Certification
+
+**CS50's Web Programming with Python and JavaScript** *Harvard University & edX* I have successfully completed this course, mastering the design and implementation of web apps with Python, JavaScript, and SQL.  
+👉 **[View My Official Certificate](https://cs50.harvard.edu/certificates/e2901db2-02f2-4e1d-8c44-a130651fff6f)**
