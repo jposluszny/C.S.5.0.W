@@ -31,7 +31,7 @@ Each directory represents a milestone in the course, progressing from basic fron
 | **2** | [Commerce](./Commerce) | Django, SQL | An e-commerce auction site (eBay clone) with bidding, comments, and watchlists. |
 | **3** | [Mail](./Mail) | Django, JS (ES6) | A Single Page Application (SPA) email client with dynamic UI updates. |
 | **4** | [Network](./Network) | Django, JS, ORM | A social network (Twitter clone) featuring posts, follows, likes, and pagination. |
-| **Final**| [Library System](./Capstone)| **Full Stack / DevOps**| **A robust library management system with CI/CD and Docker integration.** |
+| **Final**| [Library System](./Capstone)| **Full Stack / DevOps**| **A robust library management system with a comprehensive test suite and Dockerized production setup.** |
 
 ---
 
