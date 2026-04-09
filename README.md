@@ -16,7 +16,7 @@ This is the capstone project of the course, where I implemented a production-rea
     * **CI/CD:** Integrated **GitHub Actions** to automatically run tests on every push.
     * **Containerization:** Fully Dockerized environment using **Docker** and **Docker Compose**.
     * **Production Ready:** Configured with **Gunicorn** and optimized for deployment (Render/Heroku).
-* 👉 **[Explore the Final Project](./final_project)**
+* 👉 **[Explore the Final Project](./Capstone)**
 
 ---
 
